@@ -1,0 +1,29 @@
+原型图：https://free.modao.cc/app/c4f2f5f80b624f249aed2075fdd34766b7d7e4db
+
+项目地址：https://github.com/1990zimu/houtai
+
+项目github 克隆地址：
+        ssh协议地址：       git@github.com:1990zimu/houtai.git
+        或者https协议地址：  https://github.com/1990zimu/houtai.git
+    命令    
+        git clone 地址
+
+
+进入项目目录 
+    根据 package.json 下载项目依赖
+    npm install  或者
+    yarn install 
+
+animate.css网址
+
+https://daneden.github.io/animate.css/
+
+在vue项目中使用 animate.css
+
+
+https://www.jianshu.com/p/65081a8f06be
+
+
+vue transition和animate.css 设置不同效果延时和时长
+
+https://blog.csdn.net/weixin_34417635/article/details/89051368
