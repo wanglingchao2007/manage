@@ -18,6 +18,9 @@ const glyList = () => import("@/components/gly/list.vue")
 const glyAdd = () => import("@/components/gly/add.vue")
 const glyEdit = () => import("@/components/gly/edit.vue")
 
+//商品分类  goodsfl
+const goodsflAdd = () => import("@/components/goodsfl/add.vue")
+const goodsflList = () => import("@/components/goodsfl/list.vue")
 
 
 
@@ -91,7 +94,16 @@ let router = new Router({
           name: 'glyedit',
           component: glyEdit,
         },
-
+        {
+          path: 'goodsfladd',
+          name: 'goodsfladd',
+          component: goodsflAdd,
+        },
+        {
+          path: 'goodsfllist',
+          name: 'goodsfllist',
+          component: goodsflList,
+        },
       ]
     },
     // 路由重定向

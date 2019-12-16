@@ -5,7 +5,7 @@ const adminsModel = require("./model/admins.js")
 adminsModel.find({}, (err, data) => {
     // 四、如果没有 创建
     if (data.length == 0) {
-        adminsModel.create({ "name": "gao", "password": "123456" }, (err, data) => {
+        adminsModel.create({ "name": "wang", "password": "123456" }, (err, data) => {
             if (err) {
                 console.log(err)
             } else {

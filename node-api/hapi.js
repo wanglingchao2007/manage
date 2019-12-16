@@ -272,25 +272,50 @@ app.get("/adminqx", (req, res) => {
     })
 })
 //判断是否有权限  get---name 
-app.get("/checkqx",(req,res)=>{
-    let name= req.query.name;
+app.get("/checkqx", (req, res) => {
+    let name = req.query.name;
     let id = req.query.id;
     // console.log(id,name)
-    adminsModel.findOne({_id:id}).populate("jsid").exec((err,data)=>{
-      
-        let qxid = Array.from(new Set(data.jsid.qxid.flat(Infinity)));
-        
-        quanxiansModel.find({_id:{$in:qxid}},(err2,data2)=>{
+    adminsModel.findOne({ _id: id }).populate("jsid").exec((err, data) => {
+
+        let qx = Array.from(new Set(data.jsid.qxid.flat(Infinity)));
+
+        quanxiansModel.find({ _id: { $in: qx } }, (err2, data2) => {
             console.log(data2)
             console.log(name)
-            let f = data2.findIndex(val=>val.name==name)
-            if(f>-1){
-                res.send({err_code:200})
-            }else{
-                res.send({err_code:400})
+            let f = data2.findIndex(val => val.name == name)
+            if (f > -1) {
+                res.send({ err_code: 200 })
+            } else {
+                res.send({ err_code: 400 })
             }
         })
     })
 
 })
+
+//文件上传
+
+//载入multer
+let multer = require("multer");
+let storage = multer.diskStorage({
+    //文件存储路径
+    destination: function (req, file, cb) {
+        cb(null, "./public/fl")
+    },
+    //文件名
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+});
+let up = multer({ storage: storage });
+app.use(express.static("public"))
+app.post('/fileup', up.single("picture"), (req, res) => {
+    console.log(req.headers.host + "/fl/" + req.file.originalname+'123')
+    let imgurl = "/fl/" + req.file.originalname;
+    res.send({ imgurl: imgurl })
+    // this.$refs['upload' + this.index].active = true;
+})
+
+
 app.listen(3000)
