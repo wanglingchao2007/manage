@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
+    "vue-json-excel": "^0.2.98",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

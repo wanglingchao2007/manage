@@ -18,10 +18,16 @@ const glyList = () => import("@/components/gly/list.vue")
 const glyAdd = () => import("@/components/gly/add.vue")
 const glyEdit = () => import("@/components/gly/edit.vue")
 
+//用户管理 gluser
+const gluser = () => import("@/components/gl/gluser.vue")
 //商品分类  goodsfl
 const goodsflAdd = () => import("@/components/goodsfl/add.vue")
 const goodsflList = () => import("@/components/goodsfl/list.vue")
-
+//商品管理 -- sp
+const spList = () => import("@/components/sp/list.vue")
+const spAdd = () => import("@/components/sp/add.vue")
+//订单管理
+const glddList = () => import("@/components/gldd/list.vue")
 
 
 
@@ -103,6 +109,28 @@ let router = new Router({
           path: 'goodsfllist',
           name: 'goodsfllist',
           component: goodsflList,
+        },
+       
+         {
+          path: 'splist',
+          name: 'spList',
+          component: spList,
+        },
+        {
+          path: 'spadd',
+          name: 'spadd',
+          component: spAdd,
+        },
+        {
+          path: 'gluser',
+          name: 'gluser',
+          component: gluser,
+        },
+        //订单管理
+        {
+          path: 'gldd',
+          name: 'gldd',
+          component: glddList,
         },
       ]
     },

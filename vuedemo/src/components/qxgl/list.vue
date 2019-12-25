@@ -3,30 +3,30 @@
     <!-- <h1>我是所有权限的 表格</h1> -->
     <el-button @click="$router.push({'name':'qxgladd'})">添加权限</el-button>
     <!-- 表格 -->
-    <el-table :data="tableData" style="width: 100%" max-height="500">
-      <el-table-column fixed prop="_id" label="id"></el-table-column>
-      <el-table-column fixed prop="title" label="标题"></el-table-column>
-      <el-table-column fixed prop="name" label="路由name"></el-table-column>
-      <el-table-column fixed prop="pid" label="父权限id"></el-table-column>
 
-      <!-- 操作 删除 -->
-      <el-table-column fixed="right" label="操作">
-        <template slot-scope="scope">
-          <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData,scope.row._id)"
-            type="text"
-            size="small"
-          >移除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-tree :data="tableData" :props="defaultProps" class="tree">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span>{{data.title}}</span>
+        <span>
+          <el-button type="text" size="mini" @click="()=>del(data.id)">移除</el-button>
+        </span>
+      </span>
+    </el-tree>
   </div>
 </template>
 
 <script>
+import treelist from "@/myjs/qxtree.js";
 export default {
   methods: {
-    deleteRow(index, rows, id) {
+    list() {
+      this.axios.get("/listquanxian").then(res => {
+        this.tableData = treelist(res.data.info, 0);
+        console.log(this.tableData);
+      });
+    },
+    del(id) {
+      // console.log(id);
       this.$confirm("此操作将永久删除, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -41,12 +41,11 @@ export default {
             })
             .then(res => {
               if (res.data.err_code == 200) {
-                // rows.splice(index, 1);
+                this.list();
                 this.$message({
                   type: "success",
                   message: "删除成功!"
                 });
-                this.list();
               }
             });
         })
@@ -56,13 +55,6 @@ export default {
             message: "已取消删除"
           });
         });
-
-      // console.log(id);
-    },
-    list() {
-      this.axios.get("/listquanxian").then(res => {
-        this.tableData = res.data.info;
-      });
     }
   },
   mounted() {
@@ -70,15 +62,36 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        // {
-        //   _id: "1",
-        //   title: "统计",
-        //   name: "",
-        //   pid: 0
-        // }
-      ]
+      defaultProps: {
+        id: "id",
+        title: "title"
+      },
+      tableData: []
     };
   }
 };
 </script>
+
+<style >
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+.tree {
+  width: 60%;
+}
+.el-tree-node__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 50px;
+  cursor: pointer;
+}
+</style>
